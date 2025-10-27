@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { SERVER_API } from '../../config/serverapi';
+
+
 
 export const getProduct = createAsyncThunk('product/getProduct', async ({ keyword, page = 1, category }, { rejectWithValue }) => {
     try {
-        let link = '/api/v1/products?page=' + page;
+        let link = `${SERVER_API}/api/v1/products?page=` + page;
         if (category) {
             link += `&category=${category}`;
         }
@@ -23,7 +26,7 @@ export const getProduct = createAsyncThunk('product/getProduct', async ({ keywor
 // Product Details
 export const getProductDetails = createAsyncThunk('product/getProductDetails', async (id, { rejectWithValue }) => {
     try {
-        const link = `/api/v1/product/${id}`;
+        const link = `${SERVER_API}/api/v1/product/${id}`;
         const { data } = await axios.get(link);
         return data;
     } catch (error) {
@@ -46,7 +49,7 @@ export const createReview = createAsyncThunk(
                 formData.append("images", img);
             });
 
-            const { data } = await axios.put("/api/v1/review", formData, {
+            const { data } = await axios.put(`${SERVER_API}/api/v1/review`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

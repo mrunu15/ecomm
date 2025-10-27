@@ -1,15 +1,16 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
+import { SERVER_API } from '../../config/serverapi';
 
 // Register API
 export const register=createAsyncThunk('user/register',async (userData,{rejectWithValue})=>{
     try{
         const config={
             headers:{
-                'Content-Type':'multipart/form-data'
+                'Content-Type':'multipart/form-data',
             }
         }
-    const {data}=await axios.post('/api/v1/register',userData,config)
+    const {data}=await axios.post(`${SERVER_API}/api/v1/register`,userData,config)
     return data
     
     }catch(error){
@@ -21,9 +22,10 @@ export const login=createAsyncThunk('user/login',async ({email,password},{reject
         const config={
             headers:{
                 'Content-Type':'application/json'
-            }
+            },
+            withCredentials:true
         }
-    const {data}=await axios.post('/api/v1/login',{email,password},config)
+    const {data}=await axios.post(`${SERVER_API}/api/v1/login`,{email,password},config)
     console.log("user data : ",data);
     return data
     
@@ -34,16 +36,28 @@ export const login=createAsyncThunk('user/login',async ({email,password},{reject
 
 export const loadUser=createAsyncThunk('user/loadUser',async(_,{rejectWithValue})=>{
     try{
-        const {data}=await axios.get('/api/v1/profile');
+        const {data}=await axios.get(`${SERVER_API}/api/v1/profile`,{withCredentials: true,headers: { 'Cache-Control': 'no-cache' }});
+        console.log("loading user data: ",data)
         return data
     }catch(error){
         return rejectWithValue(error.response?.data || 'Failed to load user profile')
     }
 })
 
+export const checktoken=createAsyncThunk('user/token',async(_,{rejectWithValue})=>{
+    try{
+        const {data}=await axios.get('/api/v1/checktoken',{withCredentials:true});
+        console.log(" token delete? ",data)
+        return data
+    }catch(error){
+        return rejectWithValue(error.response?.data || 'token checking failed')
+    }
+})
+
 export const logout=createAsyncThunk('user/logout',async(_,{rejectWithValue})=>{
     try{
-        const {data}=await axios.post('/api/v1/logout',{withCredentials:true});
+        const {data}=await axios.post(`${SERVER_API}/api/v1/logout`,{},{withCredentials:true});
+        console.log("logout data : ",data)
         return data
     }catch(error){
         return rejectWithValue(error.response?.data || 'Logout failed')
@@ -57,7 +71,7 @@ export const updateProfile=createAsyncThunk('user/updateProfile',async(userData,
                 'Content-Type':'multipart/form-data'
             }
         }
-        const {data}=await axios.put('/api/v1/profile/update',userData,config);
+        const {data}=await axios.put(`${SERVER_API}/api/v1/profile/update`,userData,config);
         return data
     }catch(error){
         return rejectWithValue(error.response?.data || { message:'Profile update failed. Please try again later'})
@@ -71,7 +85,7 @@ export const updatePassword=createAsyncThunk('user/updatePassword',async(formDat
                 'Content-Type':'application/json'
             }
         }
-        const {data}=await axios.put('/api/v1/password/update',formData,config);
+        const {data}=await axios.put(`${SERVER_API}/api/v1/password/update`,formData,config);
         return data
     }catch(error){
         return rejectWithValue(error.response?.data || 'Password update failed')
@@ -86,7 +100,7 @@ export const forgotPassword=createAsyncThunk('user/forgotPassword',async(email,{
                 'Content-Type':'application/json'
             }
         }
-        const {data}=await axios.post('/api/v1/password/forgot',email,config);
+        const {data}=await axios.post(`${SERVER_API}/api/v1/password/forgot`,email,config);
         return data
     }catch(error){
         return rejectWithValue(error.response?.data || {message:'Email sent Failed'})
@@ -99,7 +113,7 @@ export const resetPassword=createAsyncThunk('user/resetPassword',async({token,us
                 'Content-Type':'application/json'
             }
         }
-        const {data}=await axios.post(`/api/v1/reset/${token}`,userData,config);
+        const {data}=await axios.post(`${SERVER_API}/api/v1/reset/${token}`,userData,config);
         return data
     }catch(error){
         return rejectWithValue(error.response?.data || {message:'Email sent Failed'})

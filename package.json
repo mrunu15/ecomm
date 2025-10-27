@@ -20,6 +20,7 @@
     "aos": "^2.3.4",
     "axios": "^1.11.0",
     "country-state-city": "^3.2.1",
+    "dotenv": "^17.2.3",
     "flowbite": "^3.1.2",
     "framer-motion": "^12.23.12",
     "js-cookie": "^3.0.5",

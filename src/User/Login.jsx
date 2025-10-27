@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login, removeErrors } from "../feature/user/userSlice";
 import { motion } from "framer-motion";
 import imgg1 from "../assets/imgg1.jpg";
+import { LogOut } from "lucide-react";
 
 const Toast = ({ message, type = "success", onClose }) => {
   const [show, setShow] = useState(true);
@@ -53,6 +54,9 @@ const Login = () => {
     e.preventDefault();
     dispatch(login({ email: loginEmail, password: loginPassword }));
   };
+  const handleCheckToken = () => {
+      dispatch(checktoken());
+    };
 
   useEffect(() => {
     if (error) {
@@ -105,6 +109,12 @@ const Login = () => {
                 <span className="relative z-10">Register</span>
               </Link>
             </div>
+            <button
+              onClick={handleCheckToken}
+              className="flex items-center gap-2 px-3 py-2 rounded text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            >
+              <LogOut className="w-5 h-5" /> <span>checktoken</span>
+            </button>
 
             <h2 className="text-2xl font-semibold mb-6">Login</h2>
             <form onSubmit={loginSubmit} className="space-y-6">

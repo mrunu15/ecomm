@@ -28,7 +28,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ecom-backend-8t2q.onrender.com',
+        target: 'https://ecom-backend-8t2q.onrender.com/',
         changeOrigin: true,
         secure: false,
       },
