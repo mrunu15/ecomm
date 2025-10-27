@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import logo from "../assets/logo.png"
 import {
   Dialog,
@@ -23,6 +23,8 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { FaBars, FaTimes, FaUserPlus, FaArrowRight } from 'react-icons/fa';
+import { checktoken } from '../feature/user/userSlice';
+import { LogOut } from 'lucide-react';
 
 // Constants
 const NAVIGATION = {
@@ -92,6 +94,10 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const dispatch = useDispatch();
+  const handleCheckToken = () => {
+      dispatch(checktoken());
+    };
 
   const navigate = useNavigate();
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -120,6 +126,12 @@ function Navbar() {
           className="h-6 mt-2 ml-[-10px] lg:ml-0 w-auto sm:h-6 md:h-8 lg:h-8 xl:h-8"
         />
       </span>
+      <button
+              onClick={handleCheckToken}
+              className="flex items-center gap-2 px-3 py-2 rounded text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            >
+              <LogOut className="w-5 h-5" /> <span>checktoken</span>
+            </button>
 
 
     </Link>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useSelector, useDispatch } from "react-redux";
-import { login, removeErrors } from "../feature/user/userSlice";
+import { checktoken, login, removeErrors } from "../feature/user/userSlice";
 import { motion } from "framer-motion";
 import imgg1 from "../assets/imgg1.jpg";
 import { LogOut } from "lucide-react";
@@ -109,12 +109,7 @@ const Login = () => {
                 <span className="relative z-10">Register</span>
               </Link>
             </div>
-            <button
-              onClick={handleCheckToken}
-              className="flex items-center gap-2 px-3 py-2 rounded text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-            >
-              <LogOut className="w-5 h-5" /> <span>checktoken</span>
-            </button>
+            
 
             <h2 className="text-2xl font-semibold mb-6">Login</h2>
             <form onSubmit={loginSubmit} className="space-y-6">

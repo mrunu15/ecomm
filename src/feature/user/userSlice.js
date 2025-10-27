@@ -36,7 +36,7 @@ export const login=createAsyncThunk('user/login',async ({email,password},{reject
 
 export const loadUser=createAsyncThunk('user/loadUser',async(_,{rejectWithValue})=>{
     try{
-        const {data}=await axios.get(`${SERVER_API}/api/v1/profile`,{withCredentials: true,headers: { 'Cache-Control': 'no-cache' }});
+        const {data}=await axios.get(`${SERVER_API}/api/v1/profile`,{withCredentials: true});
         console.log("loading user data: ",data)
         return data
     }catch(error){
@@ -46,7 +46,7 @@ export const loadUser=createAsyncThunk('user/loadUser',async(_,{rejectWithValue}
 
 export const checktoken=createAsyncThunk('user/token',async(_,{rejectWithValue})=>{
     try{
-        const {data}=await axios.get('/api/v1/checktoken',{withCredentials:true});
+        const {data}=await axios.get(`${SERVER_API}/api/v1/checktoken`,{withCredentials:true});
         console.log(" token delete? ",data)
         return data
     }catch(error){
