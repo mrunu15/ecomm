@@ -32,53 +32,6 @@ import { useNavigate } from "react-router-dom";
 
 
 function Dashboard() {
-
-  const [youtubeData, setYoutubeData] = useState({ subscribers: 0, videos: 0 });
-
-  useEffect(() => {
-  const fetchYouTubeData = async () => {
-    const API_KEY = "AIzaSyDbY8CHdp9KLoqlHbzG1-AWHOrqbyRPEgA"; 
-    const CHANNEL_ID = "UCEJU13AmA9oe8JyVjUqvlKw"; 
-
-    try {
-      const res = await axios.get(
-        `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`
-      );
-      const stats = res.data.items[0].statistics;
-      setYoutubeData({
-        subscribers: stats.subscriberCount,
-        videos: stats.videoCount,
-      });
-    } catch (error) {
-      console.error("YouTube API Error:", error);
-    }
-  };
-
-  fetchYouTubeData();
-}, []);
-
-const [linkedinData, setLinkedinData] = useState({ firstName: "", lastName: "" });
-
-useEffect(() => {
-  const fetchLinkedinData = async () => {
-    const ACCESS_TOKEN = "YOUR_LINKEDIN_ACCESS_TOKEN";
-
-    try {
-      const res = await axios.get("https://api.linkedin.com/v2/me", {
-        headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
-      });
-      setLinkedinData({
-        firstName: res.data.firstName.localized.en_US,
-        lastName: res.data.lastName.localized.en_US,
-      });
-    } catch (err) {
-      console.error("LinkedIn API Error:", err);
-    }
-  };
-
-  fetchLinkedinData();
-}, []);
-
   
   const { products, orders, totalAmount } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
@@ -208,7 +161,7 @@ useEffect(() => {
               {[
                 { icon: Instagram, color: 'text-pink-600', title: 'Instagram', followers: '123K', posts: '12' },
                 { icon: LinkedIn, color: 'text-blue-700', title: 'LinkedIn', followers: '55K', posts: '6' },
-                { icon: YouTube, color: 'text-red-600', title: 'YouTube', followers: youtubeData.subscribers, posts: youtubeData.videos }
+                { icon: YouTube, color: 'text-red-600', title: 'YouTube', followers: '50k', posts: '15' }
               ].map((social, idx) => (
                 <div key={idx} className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition transform hover:-translate-y-1 text-center">
                   <social.icon className={`${social.color} text-4xl mb-2 mx-auto`} />

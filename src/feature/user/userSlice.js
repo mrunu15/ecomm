@@ -44,15 +44,6 @@ export const loadUser=createAsyncThunk('user/loadUser',async(_,{rejectWithValue}
     }
 })
 
-export const checktoken=createAsyncThunk('user/token',async(_,{rejectWithValue})=>{
-    try{
-        const {data}=await axios.get(`${SERVER_API}/api/v1/checktoken`,{withCredentials:true});
-        console.log(" token delete? ",data)
-        return data
-    }catch(error){
-        return rejectWithValue(error.response?.data || 'token checking failed')
-    }
-})
 
 export const logout=createAsyncThunk('user/logout',async(_,{rejectWithValue})=>{
     try{

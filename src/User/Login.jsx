@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useSelector, useDispatch } from "react-redux";
-import { checktoken, login, removeErrors } from "../feature/user/userSlice";
+import { login, removeErrors } from "../feature/user/userSlice";
 import { motion } from "framer-motion";
 import imgg1 from "../assets/imgg1.jpg";
 import { LogOut } from "lucide-react";
@@ -54,9 +54,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(login({ email: loginEmail, password: loginPassword }));
   };
-  const handleCheckToken = () => {
-      dispatch(checktoken());
-    };
+
 
   useEffect(() => {
     if (error) {
