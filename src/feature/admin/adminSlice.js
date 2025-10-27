@@ -6,7 +6,7 @@ const SERVER_API =import.meta.env.VITE_SERVER_API_URL;
 export const fetchAdminProducts=createAsyncThunk('admin/fetchAdminProducts',async(_,{rejectWithValue})=>{
     try{
       
-        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/products`)
+        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/products`,{withCredentials: true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Error While Fetching the products")
@@ -18,7 +18,8 @@ export const createProduct=createAsyncThunk('admin/createProduct',async(productD
         const config={
             headers:{
                 'Content-Type':'multipart/form-data'
-            }
+            },
+            withCredentials: true
         }
       
         const {data}=await axios.post(`${SERVER_API}/api/v1/admin/product/create`,productData,config)
@@ -34,7 +35,8 @@ export const updateProduct=createAsyncThunk('admin/updateProduct',async({id,form
         const config={
             headers:{
                 'Content-Type':'multipart/form-data'
-            }
+            },
+            withCredentials: true
         }
       
         const {data}=await axios.put(`${SERVER_API}/api/v1/admin/product/${id}`,formData,config)
@@ -48,7 +50,7 @@ export const updateProduct=createAsyncThunk('admin/updateProduct',async({id,form
 export const deleteProduct=createAsyncThunk('admin/deleteProduct',async(productId,{rejectWithValue})=>{
     try{
       
-        const {data}=await axios.delete(`${SERVER_API}/api/v1/admin/product/${productId}`)
+        const {data}=await axios.delete(`${SERVER_API}/api/v1/admin/product/${productId}`,{withCredentials: true})
         return {productId};
     }catch(error){
         return rejectWithValue(error.response?.data ||"Product Deletion Failed")
@@ -60,7 +62,7 @@ export const deleteProduct=createAsyncThunk('admin/deleteProduct',async(productI
 export const fetchUsers=createAsyncThunk('admin/fetchUsers',async(_,{rejectWithValue})=>{
     try{
       
-        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/users`)
+        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/users`,{withCredentials: true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Failed to fetch users")
@@ -71,7 +73,7 @@ export const fetchUsers=createAsyncThunk('admin/fetchUsers',async(_,{rejectWithV
 export const getSingleUser=createAsyncThunk('admin/getSingleUser',async(id,{rejectWithValue})=>{
     try{
       
-        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/user/${id}`)
+        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/user/${id}`,{withCredentials: true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Failed to fetch Single user")
@@ -82,7 +84,7 @@ export const getSingleUser=createAsyncThunk('admin/getSingleUser',async(id,{reje
 export const updateUserRole=createAsyncThunk('admin/updateUserRole',async({userId,role},{rejectWithValue})=>{
     try{
       
-        const {data}=await axios.put(`${SERVER_API}/api/v1/admin/user/${userId}`,{role})
+        const {data}=await axios.put(`${SERVER_API}/api/v1/admin/user/${userId}`,{role},{withCredentials:true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Failed to update user role")
@@ -93,7 +95,7 @@ export const updateUserRole=createAsyncThunk('admin/updateUserRole',async({userI
 export const deleteUser=createAsyncThunk('admin/deleteUser',async(userId,{rejectWithValue})=>{
     try{
       
-        const {data}=await axios.delete(`${SERVER_API}/api/v1/admin/user/${userId}`)
+        const {data}=await axios.delete(`${SERVER_API}/api/v1/admin/user/${userId}`,{withCredentials:true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Failed to Delete User")
@@ -104,7 +106,7 @@ export const deleteUser=createAsyncThunk('admin/deleteUser',async(userId,{reject
 export const fetchAllOrders=createAsyncThunk('admin/fetchAllOrders',async(_,{rejectWithValue})=>{
     try{
       
-        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/orders`)
+        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/orders`,{withCredentials:true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Failed to Fetch Orders")
@@ -115,7 +117,7 @@ export const fetchAllOrders=createAsyncThunk('admin/fetchAllOrders',async(_,{rej
 export const deleteOrder=createAsyncThunk('admin/deleteOrder',async(id,{rejectWithValue})=>{
     try{
       
-        const {data}=await axios.delete(`${SERVER_API}/api/v1/admin/order/${id}`)
+        const {data}=await axios.delete(`${SERVER_API}/api/v1/admin/order/${id}`,{withCredentials:true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Failed to Delete Order")
@@ -128,7 +130,8 @@ export const updateOrderStatus=createAsyncThunk('admin/updateOrderStatus',async(
         const config={
             headers:{
                 'content-Type':'application/json'
-            }
+            },
+            withCredentials:true
         }
         const {data}=await axios.put(`${SERVER_API}/api/v1/admin/order/${orderId}`,{status},config)
         return data;
@@ -141,7 +144,7 @@ export const updateOrderStatus=createAsyncThunk('admin/updateOrderStatus',async(
 export const fetchProductReviews=createAsyncThunk('admin/fetchProductReviews',async(productId,{rejectWithValue})=>{
     try{
        
-        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/reviews?id=${productId}`)
+        const {data}=await axios.get(`${SERVER_API}/api/v1/admin/reviews?id=${productId}`,{withCredentials:true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Failed to Fetch Product Reviews")
@@ -151,7 +154,7 @@ export const fetchProductReviews=createAsyncThunk('admin/fetchProductReviews',as
 export const deleteReview=createAsyncThunk('admin/deleteReview',async({productId,reviewId},{rejectWithValue})=>{
     try{
        
-        const {data}=await axios.delete(`${SERVER_API}/api/v1/admin/reviews?productId=${productId}&id=${reviewId}`)
+        const {data}=await axios.delete(`${SERVER_API}/api/v1/admin/reviews?productId=${productId}&id=${reviewId}`,{withCredentials:true})
         return data;
     }catch(error){
         return rejectWithValue(error.response?.data ||"Failed to Delete Product Review")
